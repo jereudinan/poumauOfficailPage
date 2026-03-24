@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO 설정 (검색 엔진 최적화) -->
+    <title>poumau | 파우마우 - 미니멀 프리미엄 브랜드</title>
+    <meta name="description" content="파우마우(poumau)는 고품질 패브릭과 티셔츠를 제안하는 현대적인 미니멀 프리미엄 브랜드입니다.">
+    <meta name="keywords" content="파우마우, poumau, 패브릭, 티셔츠, 프리미엄 브랜드, 미니멀 디자인">
+    
+    <!-- OpenGraph (SNS 공유 시 노출되는 정보) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="poumau | 파우마우">
+    <meta property="og:description" content="고품질 패브릭과 미니멀 디자인의 정수, 파우마우를 만나보세요.">
+    <meta property="og:image" content="./assets/img/og-image.jpg"> <!-- 사용자 업데이트 필요 -->
+    <meta property="og:url" content="https://www.poumau.com">
+
+    <!-- 폰트: Pretendard (가독성 높은 샌드세리프) -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    
+    <!-- 아이콘: FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- 슬라이더: Swiper.js CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        /* CSS 변수 설정: 디자인 시스템 준수 */
+        :root {
+            --primary-bg: #FFFFFF;
+            --secondary-bg: #111111;
+            --point-color: #00C4B4;
+            --text-main: #111111;
+            --text-sub: #666666;
+            --text-white: #FFFFFF;
+            --transition-speed: 0.4s;
+            --header-height: 80px;
+        }
+
+        /* 초기화 및 기본 스타일 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        ul, li { list-style: none; }
+        a { text-decoration: none; color: inherit; transition: var(--transition-speed); }
+        img { max-width: 100%; display: block; }
+
+        /* 공통 레이아웃 */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            text-align: center;
+            letter-spacing: -0.02em;
+        }
+
+        /* Header: Sticky & Blur 효과 */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition-speed);
+        }
+
+        header.scrolled {
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--secondary-bg);
+        }
+
+        .logo span { color: var(--point-color); }
+
+        /* Desktop Nav */
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-menu li a {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .nav-menu li a:hover {
+            color: var(--point-color);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary-bg);
+            z-index: 1001;
+        }
+
+        /* Mobile Side Menu */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            height: 100vh;
+            background: var(--secondary-bg);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav li a {
+            font-size: 1.5rem;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        /* Hero Slider */
+        .hero-section {
+            width: 100%;
+            height: 100vh;
+            padding-top: 0;
+        }
+
+        .swiper { width: 100%; height: 100%; }
+
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scale(1.1);
+            transition: 8s ease-out;
+        }
+
+        .swiper-slide-active img {
+            transform: scale(1);
+        }
+
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--text-white);
+            z-index: 10;
+        }
+
+        .hero-content h2 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: 1s 0.5s;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: 1s 0.8s;
+        }
+
+        .swiper-slide-active .hero-content h2,
+        .swiper-slide-active .hero-content p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+        }
+
+        /* Category Section: Grid & Hover Effect */
+        .category-section {
+            padding: 120px 0;
+            background-color: var(--primary-bg);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .category-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .category-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .category-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .category-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: var(--text-white);
+            transition: var(--transition-speed);
+        }
+
+        .category-info h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .category-info p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* OverView Modal: 상세 이미지 보기 */
+        #overview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            display: none; /* JS로 제어 */
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        #overview-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            text-align: center;
+        }
+
+        .modal-content img {
+            max-height: 80vh;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .modal-text {
+            color: #fff;
+            margin-top: 20px;
+        }
+
+        .modal-text h4 { font-size: 1.8rem; color: var(--point-color); }
+
+        .close-modal {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-bg);
+            color: rgba(255,255,255,0.6);
+            padding: 80px 0 40px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding-bottom: 50px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .footer-info p { margin-bottom: 10px; font-size: 0.9rem; }
+
+        .footer-sns {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-sns a {
+            font-size: 1.5rem;
+            color: #fff;
+            transition: var(--transition-speed);
+        }
+
+        .footer-sns a:hover { color: var(--point-color); }
+
+        .footer-bottom {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
+        /* 반응형 설계 (768px 이하) */
+        @media (max-width: 768px) {
+            .nav-menu { display: none; }
+            .mobile-toggle { display: block; }
+
+            .category-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero-content h2 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1rem; }
+
+            .section-title { font-size: 2rem; }
+            
+            .container { padding: 0 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <a href="#" class="logo">poumau<span>.</span></a>
+            
+            <!-- Desktop Menu -->
+            <ul class="nav-menu">
+                <li><a href="#about">회사소개</a></li>
+                <li><a href="#fabric">패브릭</a></li>
+                <li><a href="#tshirts">티셔츠</a></li>
+                <li><a href="#news">파우마우 소식</a></li>
+                <li><a href="#contact">상담문의</a></li>
+            </ul>
+
+            <!-- Mobile Hamburger Toggle -->
+            <div class="mobile-toggle" id="menu-open">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Layer -->
+    <ul class="mobile-nav" id="mobile-nav">
+        <li><a href="#about" onclick="toggleMenu()">회사소개</a></li>
+        <li><a href="#fabric" onclick="toggleMenu()">패브릭</a></li>
+        <li><a href="#tshirts" onclick="toggleMenu()">티셔츠</a></li>
+        <li><a href="#news" onclick="toggleMenu()">파우마우 소식</a></li>
+        <li><a href="#contact" onclick="toggleMenu()">상담문의</a></li>
+    </ul>
+
+    <main>
+        <!-- Hero Slider Section -->
+        <section class="hero-section">
+            <div class="swiper heroSwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <img src="./assets/img/hero1.jpg" alt="Hero Image 1"> <!-- 샘플 이미지 경로 -->
+                        <div class="hero-overlay"></div>
+                        <div class="hero-content">
+                            <p>PREMIUM MINIMALISM</p>
+                            <h2>일상의 가치를 더하는 파우마우</h2>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <img src="./assets/img/hero2.jpg" alt="Hero Image 2">
+                        <div class="hero-overlay"></div>
+                        <div class="hero-content">
+                            <p>FINEST FABRIC</p>
+                            <h2>가장 본질적인 부드러움</h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <!-- Category Section (OverView 연동) -->
+        <section class="category-section container">
+            <h2 class="section-title">Collections</h2>
+            <div class="category-grid">
+                <!-- Card 1 -->
+                <div class="category-card" onclick="openOverview('./assets/img/detail1.jpg', 'Modern Fabric', '최고급 원단으로 제작된 파우마우의 시그니처 패브릭 라인입니다.')">
+                    <img src="./assets/img/thumb1.jpg" alt="Fabric Collection">
+                    <div class="category-info">
+                        <h3>Fabric</h3>
+                        <p>Signature Essential</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="category-card" onclick="openOverview('./assets/img/detail2.jpg', 'Essential T-Shirts', '심플하지만 완벽한 핏을 선사하는 티셔츠 컬렉션.')">
+                    <img src="./assets/img/thumb2.jpg" alt="T-Shirts Collection">
+                    <div class="category-info">
+                        <h3>T-Shirts</h3>
+                        <p>Daily Premium</p>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="category-card" onclick="openOverview('./assets/img/detail3.jpg', 'Design Philosophy', '미니멀리즘을 기반으로 한 파우마우만의 디자인 철학.')">
+                    <img src="./assets/img/thumb3.jpg" alt="News">
+                    <div class="category-info">
+                        <h3>Our Story</h3>
+                        <p>Design Philosophy</p>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="category-card" onclick="openOverview('./assets/img/detail4.jpg', 'Global Network', '전 세계 어디서나 파우마우를 만나보실 수 있습니다.')">
+                    <img src="./assets/img/thumb4.jpg" alt="Contact">
+                    <div class="category-info">
+                        <h3>Contact</h3>
+                        <p>Consultation</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- OverView Modal (상세보기 레이어) -->
+    <div id="overview-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeOverview()"><i class="fa-solid fa-xmark"></i></span>
+            <img id="modal-img" src="" alt="Detail View">
+            <div class="modal-text">
+                <h4 id="modal-title">Title</h4>
+                <p id="modal-desc">Description</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-info">
+                    <div class="footer-logo">poumau.</div>
+                    <p>대표자: 홍길동 | 사업자번호: 000-00-00000</p>
+                    <p>주소: 서울특별시 강남구 테헤란로 어느 곳</p>
+                    <p>Email: contact@poumau.com | Tel: 02-1234-5678</p>
+                </div>
+                <div class="footer-sns">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 poumau. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Swiper.js & JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // 1. Header Scroll Event: 스크롤 시 디자인 변경
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2. Mobile Menu Toggle: 햄버거 메뉴 제어
+        const mobileToggle = document.getElementById('menu-open');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        function toggleMenu() {
+            mobileNav.classList.toggle('active');
+            const icon = mobileToggle.querySelector('i');
+            if (mobileNav.classList.contains('active')) {
+                icon.classList.replace('fa-bars-staggered', 'fa-xmark');
+            } else {
+                icon.classList.replace('fa-xmark', 'fa-bars-staggered');
+            }
+        }
+        mobileToggle.addEventListener('click', toggleMenu);
+
+        // 3. Swiper Hero Slider: 메인 배너 슬라이더 설정
+        const swiper = new Swiper(".heroSwiper", {
+            loop: true,
+            effect: "fade", // 부드러운 교체 효과
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+
+        // 4. OverView Logic: 상세 이미지 모달 기능
+        const modal = document.getElementById('overview-modal');
+        const modalImg = document.getElementById('modal-img');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDesc = document.getElementById('modal-desc');
+
+        function openOverview(imgSrc, title, desc) {
+            modalImg.src = imgSrc;
+            modalTitle.innerText = title;
+            modalDesc.innerText = desc;
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // 스크롤 방지
+        }
+
+        function closeOverview() {
+            modal.classList.remove('active');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 400);
+        }
+
+        // 모달 배경 클릭 시 닫기
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeOverview();
+        });
+
+        // ESC 키 입력 시 닫기
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeOverview();
+        });
+    </script>
+</body>
+</html>
